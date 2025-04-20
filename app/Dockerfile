@@ -1,6 +1,14 @@
 # pull official base image
 FROM python:3.10-slim-buster
 
+
+# make /bin/sh symlink to bash instead of dash:
+RUN echo "dash dash/sh boolean false" | debconf-set-selections
+RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
+    
+# set ENV to execute startup scripts
+ENV ENV ~/.profile
+
 # set work directory
 WORKDIR /usr/src/app
 
