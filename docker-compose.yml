@@ -9,10 +9,10 @@ services:
     env_file:
       - ./.env.dev
     environment:
-      - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-      - MYSQL_USER=${SQL_USER}
-      - MYSQL_PASSWORD=${SQL_PASSWORD}
-      - MYSQL_DATABASE=${SQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=myuserpassword
+      - MYSQL_DATABASE=mydb
     ports:
       - 3306:3306
 
