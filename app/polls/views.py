@@ -53,7 +53,7 @@ def vote(request, question_id):
 
 def weather(request, zip):
 
-    # 1. Geocoding API request
+    # Geocoding API request
     geocoding_url = f"https://geocoding-api.open-meteo.com/v1/search?name={zip}"
     geocoding_response = requests.get(geocoding_url)
     geocoding_data = geocoding_response.json()
@@ -61,12 +61,18 @@ def weather(request, zip):
     if geocoding_data and geocoding_data['results']:
         latitude = geocoding_data['results'][0]['latitude']
         longitude = geocoding_data['results'][0]['longitude']
+        city = geocoding_data['results'][0]['admin1']
 
-        # 2. Weather API request
-        weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m,rain"
+        # Weather API request
+        weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}"
+        # weather_url = f"{weather_url}&forecast_days=2&hourly=temperature_2m,rain"
+        weather_url = f"{weather_url}&temperature_unit=fahrenheit&current=temperature_2m,rain"
         weather_response = requests.get(weather_url)
         weather_data = weather_response.json()
-        # return weather_data
+
+        # add the city to the data
+        weather_data.update({'city': city})
+
         return JsonResponse(weather_data)
     else:
         return "Could not find location for that zip code."

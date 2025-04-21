@@ -8,6 +8,8 @@
 
 3. Visit `http://localhost:8000` or `http://localhost:8000/admin`
 
+Weather from https://open-meteo.com/en/docs
+
 ## The Task
 
 Create a Django app that will allow multiple users to schedule wake-up calls that also announce the current weather based on their zip code. Communication should be done using Twilio.
