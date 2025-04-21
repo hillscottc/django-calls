@@ -6,16 +6,16 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponse
-from .models import Choice, Question
+from .models import Choice, Question, User
 
 
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
-    context_object_name = "latest_question_list"
+    context_object_name = "user_list"
 
     def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by("-pub_date")[:5]
+        """Return first 50 Users"""
+        return User.objects.all()[:50]
 
 
 class DetailView(generic.DetailView):

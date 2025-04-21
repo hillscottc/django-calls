@@ -2,20 +2,16 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <meta name="description"
-          content="Browse and participate in polls on various topics." />
-    <meta name="keywords" content="polls, questions, voting, topics" />
-    <title>Polls</title>
+    <meta name="description" content="calling and weather" />
+    <meta name="keywords" content="twilio, weather" />
+    <title>Weather App</title>
   </head>
   <body>
-    <div>
-      <a href="{% url 'polls:weather' zip=90008 %}">weather</a>
-    </div>
-    {% if latest_question_list %}
+    {% if user_list %}
       <ul>
-        {% for question in latest_question_list %}
+        {% for user in user_list %}
           <li>
-            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+            <a href="{% url 'polls:weather' zip=user.zip %}">{{ user }}</a>
           </li>
         {% endfor %}
       </ul>
