@@ -2,21 +2,25 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
+    <meta name="description"
+          content="Browse and participate in polls on various topics." />
+    <meta name="keywords" content="polls, questions, voting, topics" />
     <title>Polls</title>
   </head>
   <body>
+    <div>
+      <a href="{% url 'polls:weather' zip=12345 %}">weather</a>
+    </div>
     {% if latest_question_list %}
-    <ul>
-      {% for question in latest_question_list %}
-      <li>
-        <a href="{% url 'polls:detail' question.id %}"
-          >{{ question.question_text }}</a
-        >
-      </li>
-      {% endfor %}
-    </ul>
+      <ul>
+        {% for question in latest_question_list %}
+          <li>
+            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+          </li>
+        {% endfor %}
+      </ul>
     {% else %}
-    <p>No polls are available.</p>
+      <p>No polls are available.</p>
     {% endif %}
   </body>
 </html>

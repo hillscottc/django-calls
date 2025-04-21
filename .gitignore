@@ -3,6 +3,8 @@
 # .env*
 devenv
 
+.venv/
+
 # Django 
 *.log
 .pot
