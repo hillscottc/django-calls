@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponse
+from asgiref.sync import sync_to_async
 
 from .models import Choice, Question, User
 from .utils import get_weather, do_call
@@ -18,6 +19,19 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         """Return first 50 Users"""
         return User.objects.all()[:50]
+
+
+@sync_to_async
+def get_users():
+    return list(
+        User.objects.all()
+    )
+
+
+async def my_async_view(request):
+    users = await get_users()
+    context = {"users": users}
+    return render(request, "polls/my-async.html", context)
 
 
 class DetailView(generic.DetailView):

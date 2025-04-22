@@ -1,0 +1,12 @@
+{% comment %} <h2>{{ users }}</h2> {% endcomment %}
+{% if users %}
+    <ul>
+        {% for user in users %}
+            <li>
+                <a href="{% url 'polls:weather' zip=user.zip %}">{{ user }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No users are available.</p>
+{% endif %}
