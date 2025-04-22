@@ -7,14 +7,19 @@ TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 
 
 def do_call(phone, message):
-    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    try:
+        client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
-    twilio_message = client.messages.create(
-        from_='+18333401082',
-        body=message,
-        to=phone
-    )
-    return twilio_message
+        twilio_message = client.messages.create(
+            from_='+18333401082',
+            body=message,
+            to=phone
+        )
+        return twilio_message
+    except Exception as e:
+        err = f"Error sending message: {e}"
+        print(err)
+        return err
 
 
 def get_weather(zip):

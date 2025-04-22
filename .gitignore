@@ -1,6 +1,5 @@
 
-# In normal circumstances, the .env files would NOT be in source control
-# .env*
+.env*
 devenv
 
 .venv/
