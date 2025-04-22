@@ -1,11 +1,13 @@
 import requests
+import os
 from twilio.rest import Client
+
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 
 
 def do_call(phone, message):
-    account_sid = 'AC665861fdc9dca523f1f3b5300d7e5482'
-    auth_token = '8413cf6d5408e07177d19e8e434c682d'
-    client = Client(account_sid, auth_token)
+    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
     twilio_message = client.messages.create(
         from_='+18333401082',
