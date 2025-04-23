@@ -1,7 +1,7 @@
 <script>
     function getWeather(zip) {
         setContent('#output', 'Loading.........');
-        fetch(`/polls/weather/${zip}/`)
+        fetch(`/polls/weather_call/${zip}/`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -48,11 +48,11 @@
             <tr>
                 <td>{{ user.name }}</td>
                 <td>
-                    <a href="{% url 'polls:weather' zip=user.zip %}">{{ user.zip }}</a>
+                    <a href="{% url 'polls:weather_call' zip=user.zip %}">{{ user.zip }}</a>
                     <a href="#" onClick="getWeather('{{ user.zip }}')">click me</a>
                 </td>
                 <td>
-                    <a href="{% url 'polls:weather' zip=user.zip %}">{{ user.phone }}</a>
+                    <a href="{% url 'polls:weather_call' zip=user.zip %}">{{ user.phone }}</a>
                 </td>
             </tr>
         {% endfor %}

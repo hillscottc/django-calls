@@ -33,7 +33,7 @@ class UsersView(generic.ListView):
         return User.objects.all()[:50]
 
 
-def weather(request, zip):
+def weather_call(request, zip):
     weather_results = get_weather(zip)
     twilio_results = do_call("+13104318777", weather_results)
     context = {"weather_results": weather_results,
@@ -46,6 +46,7 @@ async def send_all(request):
     results = ""
     for user in users:
         weather_results = get_weather(user.zip)
+        # twilio_results = do_call("+13104318777", weather_results)
         results += f"{weather_results}\n"
 
     context = {"results": results}
