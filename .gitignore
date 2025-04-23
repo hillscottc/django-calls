@@ -4,6 +4,8 @@ devenv
 
 .venv/
 
+.vscode
+
 # Django 
 *.log
 .pot

@@ -7,6 +7,9 @@ from asgiref.sync import sync_to_async
 
 from .models import Choice, Question, User
 from .utils import get_weather, do_call
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -14,6 +17,9 @@ class IndexView(generic.ListView):
     context_object_name = "user_list"
 
     def get_queryset(self):
+        # logger.warning("HELLO")
+        # logger.info("HELLO")
+        # logger.debug("HELLO")
         """Return first 50 Users"""
         return User.objects.all()[:50]
 
@@ -26,14 +32,10 @@ def get_users():
 
 
 async def my_async_view(request):
+    logger.info("Rendering user list page.")
     users = await get_users()
     context = {"users": users}
     return render(request, "polls/my-async.html", context)
-
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = "polls/detail.html"
 
 
 class ResultsView(generic.DetailView):
