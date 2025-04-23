@@ -1,34 +1,25 @@
-# Django and MySQL on Docker
+# WeatherApp - Django and MySQL on Docker
 
-## Usage
+## The Task
+
+Create a Django app that will allow multiple users to schedule wake-up calls that also announce the current weather based on their zip code. Communication should be done using Twilio [...see the rest...](https://docs.google.com/document/d/1qeaZR55AEINRRDYHk246DJCy_8DFyvHhvzIxED8naTc/edit?usp=sharing)
+
+Weather is fetched from [Open-meteo](https://open-meteo.com/)
+
+## API exposed by this app
+
+Weather only: /polls/weather_call/{zip_code}
+
+Weather, and text it: /polls/weather_call/{zip_code}/{phone_number}
+
+Weather and text EVERYBODY: /polls/send_all
+
+## Build and run locally
 
 1. Run `docker compose --env-file .env.dev up --build`
 
 2. Create superuser : `docker exec -it django-web python manage.py createsuperuser`
 
-3. Visit `http://localhost:8000` or `http://localhost:8000/admin`
+3. Visit `http://localhost:8000/polls` or `http://localhost:8000/admin`
 
 Weather from https://open-meteo.com/en/docs
-
-## The Task
-
-Create a Django app that will allow multiple users to schedule wake-up calls that also announce the current weather based on their zip code. Communication should be done using Twilio.
-
-- The wake-up call can be either a call or a text message based on the user's preference. Either version should be able to accept changing the next scheduled time, stopping, or switching the contact method.
-  -Call version can use voice input or DTMF.
-
-Scheduling a new wake-up call can be done in multiple ways.
-
-- Using the app
-- External API for extensibility.
-- (Optional) Inbound Call to the system.
-- Before the wake-up calls can be executed, the user's phone number should be verified for ownership.
-
-The project should:
-
-- Run in a container with instructions to build and deploy to the AWS Fargate service.
-- Log to AWS CloudWatch
-- Use a Git Repo
-- Async requests use a queueing service.
-- Include a tool to seed the data for at least 30 demo events. Demo events can be suppressed from making actual calls/text messages, but should be logged.
-- Demonstrate user and admin roles.

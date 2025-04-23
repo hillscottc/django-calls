@@ -7,5 +7,7 @@ urlpatterns = [
     path("users/", views.UsersView.as_view(), name="user_list"),
     path("weather_call/<str:zip>/<str:phone>",
          views.weather_call, name="weather_call"),
+    path("weather_call/<str:zip>",
+         views.weather_call, name="weather_call"),
     path("send_all/", views.send_all, name="send_all"),
 ]
