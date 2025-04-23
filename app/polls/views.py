@@ -33,9 +33,9 @@ class UsersView(generic.ListView):
         return User.objects.all()[:50]
 
 
-def weather_call(request, zip):
+def weather_call(request, zip, phone):
     weather_results = get_weather(zip)
-    twilio_results = do_call("+13104318777", weather_results)
+    twilio_results = do_call(phone, weather_results)
     context = {"weather_results": weather_results,
                "twilio_results": twilio_results}
     return render(request, "polls/results.html", context)

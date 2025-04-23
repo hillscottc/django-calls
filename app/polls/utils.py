@@ -1,18 +1,21 @@
 import requests
 import os
-from asgiref.sync import sync_to_async
 from twilio.rest import Client
+import logging
+
+logger = logging.getLogger(__name__)
 
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
+TWILIO_FROM_PHONE = os.environ.get("TWILIO_FROM_PHONE")
 
 
 def do_call(phone, message):
+    logger.info(f"Sending text to {phone} from {TWILIO_FROM_PHONE}")
     try:
         client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
         twilio_message = client.messages.create(
-            from_='+18333401082',
+            from_=TWILIO_FROM_PHONE,
             body=message,
             to=phone
         )
