@@ -9,5 +9,6 @@ urlpatterns = [
     path("<int:pk>/results/", views.ResultsView.as_view(), name="results"),
     # path("<int:question_id>/vote/", views.vote, name="vote"),
     path("weather/<int:zip>/", views.weather, name="weather"),
+    path("send_all/", views.send_all, name="send_all"),
     # path('wel/', views.ReactView.as_view(), name="something"),
 ]

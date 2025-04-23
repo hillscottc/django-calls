@@ -1,11 +1,8 @@
 import requests
 from django.db.models import F
-from django.http import JsonResponse
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from django.http import HttpResponse
 from asgiref.sync import sync_to_async
 
 from .models import Choice, Question, User
@@ -50,6 +47,17 @@ def weather(request, zip):
     context = {"weather_results": weather_results,
                "twilio_results": twilio_results}
     return render(request, "polls/results.html", context)
+
+
+async def send_all(request):
+    users = await get_users()
+    results = ""
+    for user in users:
+        weather_results = get_weather(user.zip)
+        results += f"{weather_results}\n"
+
+    context = {"results": results}
+    return render(request, "polls/send-all-results.html", context)
 
 
 # def vote(request, question_id):

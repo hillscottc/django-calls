@@ -1,12 +1,64 @@
-{% comment %} <h2>{{ users }}</h2> {% endcomment %}
+<script>
+    function getWeather(zip) {
+        setContent('#output', 'Loading.........');
+        fetch(`/polls/weather/${zip}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                setContent('#output', data);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    function setContent(divSelector, value) {
+        document.querySelector(divSelector).innerHTML = value;
+    }
+</script>
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 18px;
+        text-align: left;
+        width: 100%;
+    }
+    .styled-table tr {
+        border-bottom: 1px solid #dddddd;
+    }
+    .styled-table td {
+        padding: 12px 5px;
+    }
+    .styled-table a {
+        color: #3498db;
+        text-decoration: none;
+    }
+    .styled-table a:hover {
+        text-decoration: underline;
+    }
+</style>
 {% if users %}
-    <ul>
+    <table class="styled-table">
         {% for user in users %}
-            <li>
-                <a href="{% url 'polls:weather' zip=user.zip %}">{{ user }}</a>
-            </li>
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>
+                    <a href="{% url 'polls:weather' zip=user.zip %}">{{ user.zip }}</a>
+                    <a href="#" onClick="getWeather('{{ user.zip }}')">click me</a>
+                </td>
+                <td>
+                    <a href="{% url 'polls:weather' zip=user.zip %}">{{ user.phone }}</a>
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No users are available.</p>
 {% endif %}
+<a href="{% url 'polls:send_all' %}">SEND ALL</a>
+<div id="output"></div>
