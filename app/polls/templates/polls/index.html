@@ -1,64 +1,66 @@
-<script>
-    function getWeather(zip, phone) {
-        setContent('#output', 'Loading.........');
-        fetch(`/polls/weather_call/${zip}/${phone}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(data => {
-                setContent('#output', data);
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    }
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <head>
+        <meta name="description"
+              content="Weather App to fetch weather data based on zip code and phone number.">
+        <meta name="keywords"
+              content="Weather, Zip Code, Phone Number, Weather App">
+        <title>Weather App</title>
+        <script>
+        /**
+        * Wraps the api call to fetch weather data based on zip code and phone number.
+        * @param {string} zip - The zip code to fetch weather data for.
+        * @param {string} phone - The phone number to send the weather data to.
+        */
+        function weatherCall(zip, phone) {
+            setContent('#output', 'Loading.........');
+            fetch(`/polls/weather_call/${zip}/${phone}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    setContent('#output', data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
 
-    function setContent(divSelector, value) {
-        document.querySelector(divSelector).innerHTML = value;
-    }
-</script>
-<style>
-    .styled-table {
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 18px;
-        text-align: left;
-        width: 100%;
-    }
-    .styled-table tr {
-        border-bottom: 1px solid #dddddd;
-    }
-    .styled-table td {
-        padding: 12px 5px;
-    }
-    .styled-table a {
-        color: #3498db;
-        text-decoration: none;
-    }
-    .styled-table a:hover {
-        text-decoration: underline;
-    }
-</style>
-{% if users %}
-    <table class="styled-table">
-        {% for user in users %}
-            <tr>
-                <td>{{ user.name }}</td>
-                <td>
-                    <a href="{% url 'polls:weather_call' zip=user.zip phone=user.phone %}">{{ user.zip }}</a>
-                    <a href="#" onClick="getWeather('{{ user.zip }}', '{{ user.phone }}')">click me</a>
-                </td>
-                <td>
-                    <a href="{% url 'polls:weather_call' zip=user.zip phone=user.phone %}">{{ user.phone }}</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>No users are available.</p>
-{% endif %}
-<a href="{% url 'polls:send_all' %}">SEND ALL</a>
-<div id="output"></div>
+        /**
+        * Sets the inner HTML of a specified element.
+        * @param {string} divSelector - The selector for the element to update.
+        * @param {string} value - The value to set as the inner HTML.
+        */
+        function setContent(divSelector, value) {
+            document.querySelector(divSelector).innerHTML = value;
+        }
+        </script>
+    </head>
+    <body>
+        {% if users %}
+            <table class="styled-table">
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>
+                            <a href="{% url 'polls:weather_call' zip=user.zip phone=user.phone %}">{{ user.zip }}</a>
+                            <a href="#" onClick="weatherCall('{{ user.zip }}', '{{ user.phone }}')">click me</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'polls:weather_call' zip=user.zip phone=user.phone %}">{{ user.phone }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No users are available.</p>
+        {% endif %}
+        <a href="{% url 'polls:send_all' %}">SEND ALL</a>
+        <div id="output"></div>
+    </body>
+</html>

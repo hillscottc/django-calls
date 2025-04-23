@@ -49,4 +49,5 @@ def get_weather(zip):
         weather_results = f"In {weather_data['location']}, the current temperature is {weather_data['current']['temperature_2m']}°F, and rain is {weather_data['current']['rain']} inches."
     else:
         weather_results = "Could not find location for that zip code."
+    logger.info(f"Weather for {zip} : {weather_results}")
     return weather_results

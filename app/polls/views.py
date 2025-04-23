@@ -1,14 +1,12 @@
 import requests
 from django.db.models import F
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.shortcuts import render
 from django.views import generic
 from asgiref.sync import sync_to_async
-
-from .models import Choice, Question, User
+from .models import User
 from .utils import get_weather, do_call
-import logging
 
+import logging
 logger = logging.getLogger(__name__)
 
 
