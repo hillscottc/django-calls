@@ -63,7 +63,9 @@
                     Weather and text EVERYBODY: <code>/polls/send_all</code>
                 </p>
             </div>
-            <br />
+            <p>
+                <a href="{% url 'admin:index' %}">link to admin panel</a>
+            </p>
             <h2>USING THIS PAGE</h2>
             <div>
                 This page demonstrates the use of the above API.
@@ -104,6 +106,5 @@
             <p>No users are available.</p>
         {% endif %}
         <div id="output"></div>
-        <a href="{% url 'admin:index' %}">link to admin panel</a>
     </body>
 </html>
