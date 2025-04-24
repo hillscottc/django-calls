@@ -22,4 +22,6 @@ Weather and text EVERYBODY: /polls/send_all
 
 3. Visit `http://localhost:8000/polls` or `http://localhost:8000/admin`
 
-Weather from https://open-meteo.com/en/docs
+4. Observe logging by running `docker logs -f django-web`
+
+5. Data can be loaded via fixture: `python manage.py loaddata users.json`
