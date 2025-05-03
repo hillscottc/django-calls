@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <head>
+        <meta name="description"
+              content="Weather App to fetch weather data based on zip code and phone number.">
+        <meta name="keywords"
+              content="Weather, Zip Code, Phone Number, Weather App">
+        <title>Weather App</title>
+        <script>
+        /**
+        * Wraps the api call to fetch weather data based on zip code and phone number.
+        * @param {string} zip - The zip code to fetch weather data for.
+        * @param {string} phone - OPTIONAL - The phone number to text the weather data to.
+        */
+        function weatherCall(zip, phone='') {
+            setContent('#output', 'Loading.........');
+
+            // If optional phone has been provided, append it to the URL
+            var url = `/weathapp/weather_call/${zip}`;
+            if (phone) {
+                url += `/${phone}`;
+            }
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    setContent('#output', data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        /**
+        * Sets the inner HTML of a specified element.
+        * @param {string} divSelector - The selector for the element to update.
+        * @param {string} value - The value to set as the inner HTML.
+        */
+        function setContent(divSelector, value) {
+            document.querySelector(divSelector).innerHTML = value;
+        }
+        </script>
+    </head>
+    <body>
+        <h1>Weather App</h1>
+        {% if users %}
+            <h2>API</h2>
+            <div class="api">
+                <p>
+                    Weather only: <code>/weathapp/weather_call/{zip_code}</code>
+                </p>
+                <p>
+                    Weather, and text it: <code>/weathapp/weather_call/{zip_code}/{phone_number}</code>
+                </p>
+                <p>
+                    Weather and text EVERYBODY: <code>/weathapp/send_all</code>
+                </p>
+            </div>
+            <p>
+                <a href="{% url 'admin:index' %}">link to admin panel</a>
+            </p>
+            <h2>USING THIS PAGE</h2>
+            <div>
+                This page demonstrates the use of the above API.
+                <br />
+                <ul>
+                    <li>Click a Zip Code to just get the weather.</li>
+                    <li>Click the phone number to get weather AND text it.</li>
+                </ul>
+                (The (async) clicks make same call but update the page asynchronously, instead of redirecting.)
+            </div>
+            <br />
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Zip Code</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>
+                            <a href="{% url 'weathapp:weather_call' zip=user.zip %}">{{ user.zip }}</a>
+                            (<a href="#" onClick="weatherCall('{{ user.zip }}')">async</a>)
+                        </td>
+                        <td>
+                            <a href="{% url 'weathapp:weather_call' zip=user.zip phone=user.phone %}">{{ user.phone }}</a>
+                            (<a href="#" onClick="weatherCall('{{ user.zip }}', '{{ user.phone }}')">async</a>)
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h3>
+                Use the <a href="{% url 'weathapp:send_all' %}">SEND ALL</a> endpoint to send the weather to all users.
+            </h3>
+        {% else %}
+            <p>No users are available.</p>
+        {% endif %}
+        <div id="output"></div>
+    </body>
+</html>

@@ -1,0 +1,11 @@
+{% if user_list %}
+  <ul>
+    {% for user in user_list %}
+      <li>
+        <a href="{% url 'weathapp:weather_call' zip=user.zip %}">{{ user }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>None are available.</p>
+{% endif %}
