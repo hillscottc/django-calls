@@ -18,7 +18,6 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 # Application definition
 INSTALLED_APPS = [
-    "polls.apps.PollsConfig",
     "weathapp.apps.WeathappConfig",
     'django.contrib.admin',
     'django.contrib.auth',
