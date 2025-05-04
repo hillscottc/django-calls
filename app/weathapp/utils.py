@@ -21,8 +21,8 @@ def do_call(phone, message):
         )
         return twilio_message
     except Exception as e:
-        err = f"Error sending message: {e}"
-        print(err)
+        err = f"ERROR sending message. {e}"
+        logger.error(err)
         return err
 
 
@@ -54,5 +54,5 @@ def get_weather(zip):
         return weather_results
     except Exception as e:
         err = f"Error sending message: {e}"
-        print(err)
+        logger.error(err)
         return err
