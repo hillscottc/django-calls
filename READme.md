@@ -1,4 +1,4 @@
-# WeatherApp - Django and MySQL on Docker
+# WeatherApp - Django and MySQL, Docker-Compose containerized
 
 ## The Task
 
@@ -8,11 +8,11 @@ Weather is fetched from [Open-meteo](https://open-meteo.com/)
 
 ## API exposed by this app
 
-Weather only: /polls/weather_call/{zip_code}
+Weather only: /weather_call/{zip_code}
 
-Weather, and text it: /polls/weather_call/{zip_code}/{phone_number}
+Weather, and text it: /weather_call/{zip_code}/{phone_number}
 
-Weather and text EVERYBODY: /polls/send_all
+Weather and text EVERYBODY: /send_all
 
 ## Build and run locally
 
@@ -20,8 +20,8 @@ Weather and text EVERYBODY: /polls/send_all
 
 2. Create superuser : `docker exec -it django-web python manage.py createsuperuser`
 
-3. Visit `http://localhost:8000/polls` or `http://localhost:8000/admin`
+3. Visit `http://localhost:8000/` or `http://localhost:8000/admin`
 
 4. Observe logging by running `docker logs -f django-web`
 
-5. Data can be loaded via fixture: `python manage.py loaddata users.json`
+5. Data can be loaded via fixture: `python manage.py loaddata app-users.json`
