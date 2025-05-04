@@ -16,6 +16,16 @@ services:
     ports:
       - 3306:3306
 
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=YOUR_USERNAME
+      - RABBITMQ_DEFAULT_PASS=YOUR_PASSWORD
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   web:
     container_name: django-web
     build:
