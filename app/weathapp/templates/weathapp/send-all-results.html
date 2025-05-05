@@ -1,4 +1,4 @@
 <h2>SEND ALL RESULTS</h2>
-<div>{{ results }}</div>
+{% for r in results_list %}<p>{{ r }}</p>{% endfor %}
 <hr />
 <a href="{% url 'weathapp:async_user_list' %}">Back</a>

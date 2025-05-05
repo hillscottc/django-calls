@@ -42,11 +42,11 @@ def weather_call(request, zip, phone=''):
 
 async def send_all(request):
     users = await get_users()
-    results = ""
+    results_list = []
     for user in users:
         weather_results = get_weather(user.zip)
         # twilio_results = do_call("+13104318777", weather_results)
-        results += f"{weather_results}\n"
+        results_list.append(weather_results)
 
-    context = {"results": results}
+    context = {"results_list": results_list}
     return render(request, "weathapp/send-all-results.html", context)
