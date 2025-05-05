@@ -10,7 +10,31 @@ TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 TWILIO_FROM_PHONE = os.environ.get("TWILIO_FROM_PHONE")
 
 
+def brief_twilio(message):
+    """
+    Returns some key fields from Twilio message object, for convenience.
+    """
+    # return {
+    #     "sid": message.sid,
+    #     "from": message.from_,
+    #     "to": message.to,
+    #     "body": message.body,
+    #     "status": message.status,
+    #     "price": message.price if message.price else 'N/A',
+    #     "error_message": message.error_message if message.error_message else 'N/A'
+    # }
+    return f"sid: {message.sid}, from: {message.from_}, to: {message.to}, status: {message.status}, price: {message.price if message.price else 'N/A'}, error_message: {message.error_message if message.error_message else 'N/A'}"
+
+
 def do_call(phone, message):
+    """
+    Send a message to a phone number using Twilio.
+    Args:
+        phone (str): The phone number to send the message to.
+        message (str): The message to send.
+    Returns:
+        str: The SID of the message sent.
+    """
     logger.info(f"Sending text to {phone} from {TWILIO_FROM_PHONE}")
     try:
         client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
@@ -19,7 +43,8 @@ def do_call(phone, message):
             body=message,
             to=phone
         )
-        return twilio_message
+        # return twilio_message
+        return brief_twilio(twilio_message)
     except Exception as e:
         err = f"ERROR sending message. {e}"
         logger.error(err)
@@ -27,6 +52,14 @@ def do_call(phone, message):
 
 
 def get_weather(zip):
+    """
+    Get the weather for a given zip code using Open Meteo API.
+    Args:
+        zip (str): The zip code to get the weather for.
+    Returns:
+        str: The weather information for the given zip code.
+    """
+
     # Geocoding API request to get the latitude, longitude, and city for given zip code
     geocoding_url = f"https://geocoding-api.open-meteo.com/v1/search?name={zip}"
     geocoding_response = requests.get(geocoding_url)

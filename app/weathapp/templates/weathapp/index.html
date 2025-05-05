@@ -13,9 +13,11 @@
         * Wraps the api call to fetch weather data based on zip code and phone number.
         * @param {string} zip - The zip code to fetch weather data for.
         * @param {string} phone - OPTIONAL - The phone number to text the weather data to.
+        * @param {string} selector - OPTIONAL - where to write the results
+
         */
-        function weatherCall(zip, phone='') {
-            setContent('#output', 'Loading.........');
+        function weatherCall(zip, phone='', selector='#output') {
+            setContent(selector, 'Loading.........');
 
             // If optional phone has been provided, append it to the URL
             var url = `/weathapp/weather_call/${zip}`;
@@ -31,7 +33,11 @@
                     return response.text();
                 })
                 .then(data => {
-                    setContent('#output', data);
+                    if (selector) {
+                        setContent(selector, data);
+                    } else {
+                        return data;
+                    }
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -63,12 +69,33 @@
                     Weather and text EVERYBODY: <code>/weathapp/send_all</code>
                 </p>
             </div>
-            <p>
-                <a href="{% url 'admin:index' %}">ADMIN</a>
-            </p>
-            <h2>USING THIS PAGE</h2>
+            <br />
+            <br />
+            <h2>QUICK CALL</h2>
             <div>
-                This page demonstrates the use of the above API.
+                <input type="text" id="zip" placeholder="Zip Code">
+                <input type="text" id="phone" placeholder="(Optional) Phone">
+                <button id="callButton">Call</button>
+                <script>
+                    document.getElementById('callButton').addEventListener('click', function() {
+                        const zip = document.getElementById('zip').value;
+                        const phone = document.getElementById('phone').value;
+                        weatherCall(zip, phone, '#callResult');
+                    });
+                </script>
+                <div>
+                    <p id="callResult"></p>
+                </div>
+            </div>
+            <div>
+                <p>Click the button to get the weather for the zip code and phone number you enter.</p>
+                <p>Note: The phone number is optional. If you don't want to text it, leave it blank.</p>
+            </div>
+            <br />
+            <br />
+            <h2>SAMPLE USER/CALL LIST</h2>
+            <div>
+                This list demonstrates using the a list of call/users for the API.
                 <br />
                 <ul>
                     <li>Click a Zip Code to just get the weather.</li>
@@ -105,6 +132,9 @@
         {% else %}
             <p>No users are available.</p>
         {% endif %}
+        <p>
+            <a href="{% url 'admin:index' %}">ADMIN</a> of the list
+        </p>
         <div id="output"></div>
     </body>
 </html>
