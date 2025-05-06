@@ -14,15 +14,6 @@ def brief_twilio(message):
     """
     Returns some key fields from Twilio message object, for convenience.
     """
-    # return {
-    #     "sid": message.sid,
-    #     "from": message.from_,
-    #     "to": message.to,
-    #     "body": message.body,
-    #     "status": message.status,
-    #     "price": message.price if message.price else 'N/A',
-    #     "error_message": message.error_message if message.error_message else 'N/A'
-    # }
     return f"sid: {message.sid}, from: {message.from_}, to: {message.to}, status: {message.status}, price: {message.price if message.price else 'N/A'}, error_message: {message.error_message if message.error_message else 'N/A'}"
 
 
