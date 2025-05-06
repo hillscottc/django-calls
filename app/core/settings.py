@@ -123,7 +123,7 @@ LOGGING = {
         },
         "file": {
             "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "logs/django.log"),
+            "filename": os.path.join(BASE_DIR, "logs/call.log"),
             "formatter": "simple",
         },
     },
@@ -133,9 +133,14 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            "handlers": ["console", "file"],
+            "handlers": ["console"],
             "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
-            "propagate": False,
+            "propagate": True,
+        },
+        'call_log': {
+            'handlers': ["console", 'file'],
+            'level': 'INFO',
+            'propagate': True,
         },
     },
 }

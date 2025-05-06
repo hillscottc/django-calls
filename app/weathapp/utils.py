@@ -3,7 +3,7 @@ import os
 from twilio.rest import Client
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("call_log")
 
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
